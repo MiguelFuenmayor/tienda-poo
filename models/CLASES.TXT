@@ -1,0 +1,35 @@
+OK, habran las siguientes clases:
+usuarios(
+    id
+    roll
+    telefono
+    img_url
+    nombre
+    email
+    contrsena
+    fecha    
+);
+categorias(
+    id
+    nombre
+);
+productos(
+    id
+    img_url
+    nombre
+    descripcion
+    precio
+    descuento
+    categorias
+    stock
+);
+pedidos(
+    id
+    usuario_id
+    fecha
+    monto
+    envio
+    ubicación
+    productos_id
+    estado
+);

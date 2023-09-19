@@ -1,0 +1,12 @@
+usuarioController(
+   METODOS
+);
+categoriasController(
+    METODOS
+);
+productosController(
+    METODOS
+);
+pedidosController(
+    METODOS
+);
