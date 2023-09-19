@@ -6,10 +6,32 @@ class pedidos extends general{
     private $fecha;
     private $monto;
     private $envio;
-    private $ubicación;
+    private $ubicacion;
     private $productos_id;
+    private $estado;
 
-
+    public function select($id){
+        if($this->db->errno==0){
+            $pedido=$this->db->query("SELECT * FROM pedidos WHERE id=$id");
+            $pedido=$pedido->fetch_assoc();
+			$this->id=$pedido['id'];
+			$this->usuario_id=$pedido['usuario_id'];
+			$this->fecha=$pedido['fecha'];
+			$this->monto=$pedido['monto'];
+			$this->envio=$pedido['envio'];
+			$this->ubicacion=$pedido['ubicacion'];
+			$this->productos_id=$pedido['productos_id'];
+			$this->estado=$pedido['estado'];
+        }   
+    }
+	public function mis_pedidos($user_id){
+		if($this->db->errno==0){
+			$mis_pedidos=$this->db->query("SELECT * FROM pedidos WHERE usuario_id=$user_id");
+			$mis_pedidos->fetch_all();
+			return $mis_pedidos;
+		}
+	}
+	
 	/**
 	 * @return mixed
 	 */
@@ -93,16 +115,16 @@ class pedidos extends general{
 	/**
 	 * @return mixed
 	 */
-	public function getUbicación() {
-		return $this->ubicación;
+	public function getUbicacion() {
+		return $this->ubicacion;
 	}
 	
 	/**
 	 * @param mixed $ubicación 
 	 * @return self
 	 */
-	public function setUbicación($ubicación): self {
-		$this->ubicación = $ubicación;
+	public function setUbicacion($ubicacion): self {
+		$this->ubicacion = $ubicacion;
 		return $this;
 	}
 	
@@ -119,6 +141,22 @@ class pedidos extends general{
 	 */
 	public function setProductos_id($productos_id): self {
 		$this->productos_id = $productos_id;
+		return $this;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getEstado() {
+		return $this->estado;
+	}
+	
+	/**
+	 * @param mixed $estado 
+	 * @return self
+	 */
+	public function setEstado($estado): self {
+		$this->estado = $estado;
 		return $this;
 	}
 }

@@ -10,6 +10,8 @@ class productos extends general{
     private $categorias;
     private $stock;
 
+	
+
 	/**
 	 * @return mixed
 	 */
