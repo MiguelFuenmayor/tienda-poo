@@ -4,8 +4,28 @@ class categorias extends general{
     Private $id;
     Private $nombre;
     
+	public function agregar_categoria($categoria){
+		if($this->db->errno==0){
+			$query="INSERT INTO categorias VALUES (null,'$categoria')";
+			$result=$this->db->query($query);
+			return $result;
+		}
+	}
+	public function eliminar_categoria($id){
+		if($this->db->errno==0){
+			$query="DELETE FROM categorias WHERE id=$id";
+			$result= $this->db->query($query);
+			return $result;
+		}
+	}
     
-
+	public function all_nombre(){
+		if($this->db->errno==0){
+			$nombres=$this->db->query("SELECT nombre FROM categorias");
+			$nombres=$nombres->fetch_array($nombres);
+			return $nombres;
+		}
+	}
 
 	/**
 	 * @return mixed

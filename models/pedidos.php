@@ -10,6 +10,41 @@ class pedidos extends general{
     private $productos_id;
     private $estado;
 
+	public function salida_productos_id($string){
+		
+	}
+
+	public function entrada_productos_id($array){
+		$result="";
+		foreach($array as $producto){
+			$id=$producto['producto_id'];
+			$cantidad=$producto['cantidad'];
+			$result.="(".$id."x".$cantidad.")";
+		}
+		return $result;
+	}
+/*
+ESTA FUNCION RECIBE UN ARRAY CON LOS SIGUIENTES DATOS:
+USUARIO_ID
+MONTO
+ENVIO
+UBICACION
+PRODUCTOS_ID (ARRAY)
+ESTADO
+*/
+	public function agregar_DB($pedido){
+		if($this->db->errno==0){
+			if(is_array($pedido) && count($pedido)==5){
+				$productos_id=$this->entrada_productos_id($pedido['productos_id']);
+				$query="INSERT INTO pedidos VALUES(NULL,{$pedido['usuario_id']},CURDATE(),{$pedido['monto']},{$pedido['envio']},'{$pedido['ubicacion']}','{$productos_id}','{$pedido['estado']}')";
+				$result=$this->db->query($query);
+				return $result;
+
+
+			}
+		}
+	}
+
     public function select($id){
         if($this->db->errno==0){
             $pedido=$this->db->query("SELECT * FROM pedidos WHERE id=$id");

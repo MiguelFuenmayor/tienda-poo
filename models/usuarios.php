@@ -2,7 +2,7 @@
 require_once 'general.php';
 class usuarios extends general{
     private $id;
-    private $roll;
+    private $rol;
     private $nombre;
     private $telefono;
     private $img_url;
@@ -62,7 +62,7 @@ class usuarios extends general{
         $user=$this->db->query("SELECT * FROM usuarios WHERE email='$email' && contrasena='$contrasena'");
         $user=$user->fetch_array();
         $this->id=$user[0];
-        $this->roll=$user[1];
+        $this->rol=$user[1];
         $this->nombre=$user[2];
         $this->telefono=$user[3];
         $this->img_url=$user[4];
@@ -93,15 +93,15 @@ class usuarios extends general{
 	 * @return mixed
 	 */
 	public function getRoll() {
-		return $this->roll;
+		return $this->rol;
 	}
 	
 	/**
-	 * @param mixed $roll 
+	 * @param mixed $rol 
 	 * @return self
 	 */
-	public function setRoll($roll): self {
-		$this->roll = $roll;
+	public function setRoll($rol): self {
+		$this->rol = $rol;
 		return $this;
 	}
 
