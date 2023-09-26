@@ -11,7 +11,21 @@ class pedidos extends general{
     private $estado;
 
 	public function salida_productos_id($string){
-		
+		 preg_match_all("/\(([0-9]+)x([0-9]+)\)/",$string,$matches);
+		 //entonces, los id de los productos estan en $matches[1][x] y
+        //las cantidades están en $matches[2][x]; ahora toca armar el array.
+        $productos_id=$matches[1];
+        $cantidades=$matches[2];
+        $numero_productos=count($matches[0]);
+        $numero_productos--;
+        
+        for($i=0;$i<=$numero_productos;$i++){
+            $array[$i]=[
+                'producto_id' => $productos_id[$i],
+                'cantidad' => $cantidades[$i]
+            ];
+        }
+        return $array;
 	}
 
 	public function entrada_productos_id($array){
@@ -45,7 +59,7 @@ ESTADO
 		}
 	}
 
-    public function select($id){
+    public function Seleccionar_from_DB($id){
         if($this->db->errno==0){
             $pedido=$this->db->query("SELECT * FROM pedidos WHERE id=$id");
             $pedido=$pedido->fetch_assoc();
@@ -55,18 +69,29 @@ ESTADO
 			$this->monto=$pedido['monto'];
 			$this->envio=$pedido['envio'];
 			$this->ubicacion=$pedido['ubicacion'];
-			$this->productos_id=$pedido['productos_id'];
+			$this->productos_id=$this->salida_productos_id($pedido['productos_id']);
 			$this->estado=$pedido['estado'];
         }   
     }
 	public function mis_pedidos($user_id){
 		if($this->db->errno==0){
-			$mis_pedidos=$this->db->query("SELECT * FROM pedidos WHERE usuario_id=$user_id");
+			$mis_pedidos=$this->db->query("SELECT id,estado,monto,fecha FROM pedidos WHERE usuario_id=$user_id");
 			$mis_pedidos->fetch_all();
 			return $mis_pedidos;
 		}
 	}
 	
+	public function eliminar_pedido($id,$user_id){
+		if($this->db->errno==0){
+			$query="SELECT $user_id FROM pedidos WHERE id=$id";
+			$revision=$this->db->query($query);
+			if($user_id==$revision){
+				$query="DELETE FROM pedidos WHERE id=$id";
+				$result=$this->db->query($query);
+			}
+		}
+		return $result;
+	}
 	/**
 	 * @return mixed
 	 */

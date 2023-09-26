@@ -7,7 +7,7 @@ class prueba{
     private $contrasena;
     private $fecha;
     public function __construct(){
-        $this->db= new mysqli('localhost','root','','blog');
+      
     }
     public function sacartodos(){
         $result=$this->db->query("SELECT * FROM usuarios");
@@ -39,7 +39,25 @@ class prueba{
         
     }
 
+    public function convertir_string_en_array($string){
+        
+        preg_match_all("/\(([0-9]+)x([0-9]+)\)/",$string,$matches);
+        //entonces, los id de los productos estan en $matches[1][x] y
+        //las cantidades están en $matches[2][x]; ahora toca armar el array.
+        $productos_id=$matches[1];
+        $cantidades=$matches[2];
+        $numero_productos=count($matches[0]);
+        $numero_productos--;
+        
+        for($i=0;$i<=$numero_productos;$i++){
+            $array[$i]=[
+                'producto_id' => $productos_id[$i],
+                'cantidad' => $cantidades[$i]
+            ];
+        }
 
+        return $array;
+    }
 
     }
 
@@ -50,23 +68,25 @@ $prueba= new prueba;
 $lista="1,1,2,2,2,3,3,3,4,4,5,5,6,6,7,7,";
 $lista_array=[
     0 => [
-        'producto_id' => 4,
-        'cantidad' => 1
+        'producto_id' => '4',
+        'cantidad' => '1'
     ],
     1 => [
-        'producto_id' => 5,
-        'cantidad' => 1
+        'producto_id' => '5',
+        'cantidad' => '1'
     ],
     2 => [
-        'producto_id' => 7,
-        'cantidad' => 1
+        'producto_id' => '7',
+        'cantidad' => '1'
     ],
     3 => [
-        'producto_id' => 9,
-        'cantidad' => 1
+        'producto_id' => '9',
+        'cantidad' => '1'
     ]
     ];
-
+    $lista_string="(4x1)(5x1)(7x1)(9x1)";
+    $array=$prueba->convertir_string_en_array($lista_string);
+    var_dump($array);
 $digito="4";
 $resultado= $prueba->eliminar_de_lista($lista_array,$digito);
 var_dump($resultado);
