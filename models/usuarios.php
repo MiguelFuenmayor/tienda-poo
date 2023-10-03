@@ -52,27 +52,115 @@ class usuarios extends general{
 		//RETURN//////////////////////////////////////////////////////
 		return $result;
     }
+
+
     /**
      * Summary of login
-     * @param mixed $id
-     * @return self
+     * 
+     * 
      */
     public function login($email,$contrasena){
+		$errores[]=null;
         if($this->db->errno == 0){
-        $user=$this->db->query("SELECT * FROM usuarios WHERE email='$email' && contrasena='$contrasena'");
+			preg_match("/[A-Za-z0-9_\-ñ]+@(gmail|outlook|hotmail)\.(com|net)/",$email) ? null : $errores[]="email";
+			$hash=$this->db->query("SELECT contrasena FROM usuarios WHERE email='$email'");
+			$hash=$hash->fetch_assoc($hash);
+			password_verify($contrasena,$hash['contrasena']) ? null : $errores[]="contrasena";
+			if(count($errores)==0){
+        $user=$this->db->query("SELECT id,nombre,img_url,email,rol FROM usuarios WHERE email='$email' && contrasena='$contrasena'");
         $user=$user->fetch_array();
         $this->id=$user[0];
-        $this->rol=$user[1];
-        $this->nombre=$user[2];
-        $this->telefono=$user[3];
-        $this->img_url=$user[4];
-        $this->email=$user[5];
-        $this->contrasena=$user[6];
-        $this->fecha=$user[7];
+        $this->nombre=$user[1];
+        $this->img_url=$user[2];
+        $this->email=$user[3];
         }
-        return $this;
+	 return $errores;
+	}
+    
     }
+	public function cambiar_nombre($id,$email,$contrasena,$nombre){
+		$result="error";
+		if($this->db->errno==0){
+			$nombre_valido= preg_match("/([A-Za-z]+ [A-Za-z]+){8-22}/",$nombre) ? true : false ;
+			if($nombre_valido){
+				$hash=$this->db->query("SELECT contrasena FROM usuarios WHERE email='$email' and id='$id'");
+				$hash=$hash->fetch_assoc($hash);
+				$comprobacion=password_verify($contrasena,$hash['contrasena']);
+				if($comprobacion){
+					$query="UPDATE usuarios SET nombre='$nombre' WHERE id='$id'";
+					$result= $this->db->query($query);
+				}else{$result.=" datos";}
+			}else{$result.=" nombre";}
+		}
+	return $result;
+	}
 
+	public function cambiar_contrasena($id,$email,$contrasena,$nueva_contrasena){
+	    $result="error";
+		$verificar_contrasena=preg_match("/[A-Za-z0-9._\-\/]{8,16}/",$nueva_contrasena);
+		if($this->db->errno==0 && $verificar_contrasena){
+			$hash=$this->db->query("SELECT contrasena FROM usuarios WHERE email='$email' and id='$id'");
+			$hash=$hash->fetch_assoc($hash);
+			$comprobacion=password_verify($contrasena,$hash['contrasena']);
+			if($comprobacion){
+				$nueva_contrasena=password_hash($nueva_contrasena,PASSWORD_DEFAULT);
+				$query="UPDATE usuarios SET contrasena='$nueva_contrasena' WHERE id='$id'";
+				$result= $this->db->query($query);
+			}else{$result.=" contrasena_invalida";}
+		}else{$result.=" nueva_contrasena_invalida";}
+	return $result;
+	}
+
+	public function mis_datos($id){
+		$datos="error";
+		if($this->db->errno==0){
+			$query="SELECT nombre,email,rol,telefono,fecha FROM usuarios WHERE id=$id";
+			$datos=$this->db->query($query);
+			$datos=$datos->fetch_assoc($datos);
+		}
+	return $datos;
+	}
+	public function perfil_publico($id){
+		if($this->db->errno==0){
+			$query="SELECT nombre,img_url FROM usuarios WHERE id='$id'";
+			$result=$this->db->query($query);
+			return $result;
+		}
+	}
+
+	public function cambiar_foto($id,$img,$contrasena){
+		$result=FALSE;
+		if($this->db->errno==0){
+			$hash=$this->db->query("SELECT contrasena FROM usuarios WHERE id=$id");
+			$hash=$hash->fetch_assoc($hash);
+			$comprobacion=password_verify($contrasena,$hash['contrasena']);
+			if($comprobacion && !empty($img) && is_dir('img')){
+				$img_name=$img['name'];
+				$img_url="img/$img_name";
+				move_uploaded_file($img['tmp_name'],$img_url);
+				$query="UPDATE usuarios SET img_url='$img_url' WHERE id=$id";
+				$result=$this->db->query($query);
+			}
+		}
+		return $result;
+	}
+
+	public function cambiar_telefono($id,$telefono,$contrasena){
+		$result="error";
+		if($this->db->errno==0){
+			$telefono_valido= preg_match("/0(412|416|424)\-[0-9]{7}/",$telefono) ? true : false ;
+			if($telefono_valido){
+				$hash=$this->db->query("SELECT contrasena FROM usuarios WHERE and id='$id'");
+				$hash=$hash->fetch_assoc($hash);
+				$comprobacion=password_verify($contrasena,$hash['contrasena']);
+				if($comprobacion){
+					$query="UPDATE usuarios SET telefono='$telefono' WHERE id='$id'";
+					$result= $this->db->query($query);
+				}else{$result.=" datos";}
+			}else{$result.=" telefono";}
+		}
+	return $result;
+	}
 	/**
 	 * @return mixed
 	 */
@@ -92,7 +180,7 @@ class usuarios extends general{
 	/**
 	 * @return mixed
 	 */
-	public function getRoll() {
+	public function getRol() {
 		return $this->rol;
 	}
 	
@@ -100,7 +188,7 @@ class usuarios extends general{
 	 * @param mixed $rol 
 	 * @return self
 	 */
-	public function setRoll($rol): self {
+	public function setRol($rol): self {
 		$this->rol = $rol;
 		return $this;
 	}
