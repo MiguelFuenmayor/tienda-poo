@@ -11,14 +11,10 @@ class UsuariosController{
         require_once 'models/usuarios.php';
         $usuario=new usuarios;
         $result=$usuario->login($email,$contrasena);
-        if(!is_array($result)){
-            $_SESSION['user']=$usuario;
-            /*GO TO INDEX; SUCcES */
-        }else{
-            /*NOSESSIONBABY de vuelta a el login ajsjasja
 
-            /*VISTA DE ERROR MOSTRANDO LOS ERRORES QUE LLEGAN EN EL ARRAY*/
-        }  
+        $_SESSION['usuario'] = $usuario ?? NULL;
+        !is_array($result) ? TRUE : FALSE;
+        
     }
 
     //va a hacer falta que ingrese la contraseña para cambiar cualquier dato
@@ -36,10 +32,34 @@ class UsuariosController{
         
         is_bool($result) ? null : null;
     }
-    public function cambiar_foto(){}
-    public function cambiar_telefono(){}
-    public function mis_datos(){}
-    public function perfil_publico(){}
+    public function cambiar_foto($id,$img,$contrasena){
+        require_once 'models/usuarios.php';
+        $usuario=new usuarios;
+        $result=$usuario->cambiar_foto($id,$img,$contrasena);
+
+        $result ? true : false;
+    }
+    public function cambiar_telefono($id,$telefono,$contrasena){
+        require_once 'models/usuarios.php';
+        $usuario=new usuarios;
+        $result=$usuario->cambiar_telefono($id,$telefono,$contrasena);
+
+        $result ? true : false;
+    }
+    public function mis_datos($id){
+        require_once 'models/usuarios.php';
+        $usuario= new usuarios;
+        $result=$usuarios->mis_datos($id);
+
+        is_array($result) ? true : false ;
+    }
+    public function perfil_publico($id){
+        require_once 'models/usuarios.php';
+        $usuario=new usuarios;
+        $result=$usuarios->perfil_publico($id);
+
+        is_array($result) ? true : false;
+    }
    
 }
 

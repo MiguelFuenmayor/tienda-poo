@@ -73,6 +73,7 @@ class usuarios extends general{
         $this->nombre=$user[1];
         $this->img_url=$user[2];
         $this->email=$user[3];
+		$this->rol=$user[4];
         }
 	 return $errores;
 	}
@@ -124,6 +125,7 @@ class usuarios extends general{
 		if($this->db->errno==0){
 			$query="SELECT nombre,img_url FROM usuarios WHERE id='$id'";
 			$result=$this->db->query($query);
+			$result=$result->fetch_assoc($result);
 			return $result;
 		}
 	}
