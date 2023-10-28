@@ -6,20 +6,25 @@ CREATE TABLE usuarios(
     id INT AUTO_INCREMENT,
     rol VARCHAR(255) DEFAULT 'cliente',
     telefono VARCHAR(255),
-    img_url VARCHAR(255),
+    img_url VARCHAR(255) DEFAULT '',
     nombre VARCHAR(255) NOT NULL,
     email VARCHAR(100) NOT NULL,
     contrasena VARCHAR(255) NOT NULL,
     fecha DATE NOT NULL,
     CONSTRAINT pk_usuarios PRIMARY KEY (id),
     CONSTRAINT uq_usuarios UNIQUE (email),
-)
+);
+
+INSERT INTO usuarios VALUES(NULL,'cliente','','','Miguel','miguel@miguel','contrasena',CURDATE());
 CREATE TABLE categorias(
     id INT AUTO_INCREMENT NOT NULL,
     nombre VARCHAR(100) NOT NULL,
     CONSTRAINT pk_categorias PRIMARY KEY (id),
     CONSTRAINT uq_categorias UNIQUE (nombre)
-)
+);
+INSERT INTO categorias VALUES(NULL,'Electrodomestico');
+INSERT INTO categorias VALUES(NULL,'Electronica');
+INSERT INTO categorias VALUES(NULL,'Ropa');
 CREATE TABLE productos(
     id INT AUTO_INCREMENT NOT NULL,
     img_url VARCHAR(255),
@@ -32,7 +37,8 @@ CREATE TABLE productos(
     CONSTRAINT pk_productos PRIMARY KEY (id),
     CONSTRAINT uq_productos UNIQUE (nombre),
     CONSTRAINT fk_productos_categorias FOREIGN KEY (categorias) REFERENCES categorias(id)
-)
+);
+INSERT INTO productos VALUES(NULL,'img/productos/default.jpg','Camiseta','Es una camiseta','45','0','3','100');
 CREATE TABLE pedidos(
     id INT AUTO_INCREMENT,
     usuario_id INT,

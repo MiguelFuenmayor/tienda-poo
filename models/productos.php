@@ -10,7 +10,50 @@ class productos extends general{
     private $categorias;
     private $stock;
 
+	public function sacarProducto($id){
+		if($this->db->errno==0){
+			$query="SELECT * FROM productos WHEN id=$id";
+			$resultado=$this->db->query($query);
+			$resultado=is_object($resultado)? $resultado->fetch_assoc($resultado) :NULL;
+			
+		}
+		return $resultado;
+	}
+	public function busqueda($string){
+		if($this->db->errno==0){
+			$query="SELECT * FROM productos WHEN nombre LIKE '$string';";
+			$resultado=$this->db->query($query);
+			$resultado= is_object($resultado) ? $resultado->fetch_all() : NULL;
+		}
+		return $resultado;
+	}
+ /*
+    $productos ARRAY
+    {
+        0 -> 'id'-> productoID, 'cantidad'-> cantidad,
+        1 -> 'id'-> productoID, 'cantidad'-> cantidad,
+        2 -> 'id'...
+    }
 	
+	array $productos
+    */
+	public function vendido($productos){
+		if(is_array($productos)){
+			foreach($productos as $producto){
+				$query="UPDATE productos SET stock=stock- {$producto['cantidad']} WHERE id={$producto['id']}";
+				$result[]=$this->db->query($query);
+			}
+		}
+		
+		($result) ? NULL : NULL;
+	}
+	
+	public function aumentarStock($productoID,$cantidad){
+		$query="UPDATE productos SET stock=stock +$cantidad WHERE id=$productoID";
+		
+		$result=$this->db->query($query);
+		($result) ? NULL : NULL;
+	}
 
 	/**
 	 * @return mixed

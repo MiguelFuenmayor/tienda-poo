@@ -1,15 +1,59 @@
+
 .grid-container{
     display: grid;
-    grid-template-rows: 20fr 35fr 35fr 10fr  ;
+    grid-template-rows: 5fr 45fr 45fr 5fr  ;
     grid-template-columns: 1fr 1fr 1fr 1fr;
 }
-img{
-    width: 10px;
+.barra__logo{
+    margin:2px;
+    width: 30px;
+}
+.barra__titulo{
+    
+    position: relative;
+    padding: 0;
+    margin: 0;
+    align-self: center;
+    font-size: 20px;
+}
+.barra__busqueda,input{
+    flex-basis: 20px;
+    align-self: center;
+    font-size: 10px;
+    width: 100px;
+    padding: 4px;
+    margin-left: auto;
+    margin-right: auto;
+    
+}
+.barra__carrito{
+    align-self: center;
+    margin-left:auto;
+    margin-right: 4px;
+    margin-top: 4px;
+}
+header,span{
+    align-self: center;
 }
 .grid-item:nth-child(2){
    grid-row: 2 / 4;
 }
 
+.grid-item:first-child{
+    position:sticky;
+    top:0;
+    display:flex;
+    border: 2px solid #3d4f;
+    background-color: #ff43bd
+}
 .grid-item{
     grid-column: 1 / 6;
 }
+/*CONTENIDO*/
+
+
+/*PIE*/
+.pie{
+    background-color: #999999;
+}
+
