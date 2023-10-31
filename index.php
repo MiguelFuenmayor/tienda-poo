@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-  <link rel="stylesheet" src="styles/normalize.css" />
-  <link rel="stylesheet" src="styles/styles.css" />
 
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+  <link rel="stylesheet" src="style/normalize.css"/>
+  <link rel="stylesheet" src="style/styles.css"/>
+  <?php require_once 'autoload.php'; ?>
   <title>Mi Tienda</title>
 </head>
 
@@ -47,6 +47,7 @@
     <div class="contenido grid-item"> <!--CONTENIDO: aquí se cargaran todas las vistas, los distintos productos, etc -->
       CONTENIDO
       <!--AGREGAR EL CONTROLADOR FRONTAL-->
+      <?Php FrontController::main(); ?>
     </div>
     <footer class="pie grid-item">
       <p>Desarrollado por Miguel Fuenmayor &copy. Todos los derechos reservados <?php date('Y'); ?> </p>

@@ -1,5 +1,12 @@
 <?php 
 class productosController {
+
+    public function sacarMasNuevo(){
+        require_once 'models/productos.php';
+        $productos= new productos;
+        $lista_productos=$productos->sacarMasNuevo();
+        require_once 'views/sacarMasNuevo.php';
+    }
      public function busqueda($string){
         require_once 'models/productos.php';
         $productos= new productos;

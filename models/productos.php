@@ -10,6 +10,15 @@ class productos extends general{
     private $categorias;
     private $stock;
 
+
+	public function sacarMasNuevo(){
+		if($this->db->errno==0){
+			$query="SELECT * FROM productos ORDER BY id DESC";
+			$result=$this->db->query($query);
+			return $result->fetch_all($result);
+			
+		}
+	}
 	public function sacarProducto($id){
 		if($this->db->errno==0){
 			$query="SELECT * FROM productos WHEN id=$id";
@@ -54,7 +63,13 @@ class productos extends general{
 		$result=$this->db->query($query);
 		($result) ? NULL : NULL;
 	}
-
+	public function precio($precio,$descuento){
+		if($descuento!=0 ){
+			$descuento=($precio * $descuento)/100;
+			$precio-=$descuento;
+		}
+		return $precio;
+	}
 	/**
 	 * @return mixed
 	 */
