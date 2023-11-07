@@ -12,7 +12,9 @@ class carritos extends general{
      * @param mixed $cantidad
      * @return void
      */
-    public function agregar_producto($id,$cantidad){
+    public function agregar_producto($args){
+        $id=$args['id'];
+        $cantidad=$args['cantidad'];
         $producto=[
             'producto_id'=>$id,
             'cantidad'=>$cantidad

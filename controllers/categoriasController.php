@@ -1,6 +1,8 @@
 <?php
 class categoriasController{
-    public function agregar($usuario,$categoria){
+    public function agregar($args){
+        $usuario=$args['usuario'];
+        $categoria=$args['categoria'];
         require_once 'models/categorias.php';
         if($usuario['rol']='admin'){
             $categorias= new categorias;
@@ -12,7 +14,9 @@ class categoriasController{
     } //FIN AGREGAR CATEGORÏA
 
     // esta función elimina segun el nombre
-    public function eliminarPorNombre($usuario,$categoria){
+    public function eliminarPorNombre($args){
+        $usuario=$args['usuario'];
+        $categoria=$args['categoria'];
         require_once 'models/categorias.php';
         if($usuario['rol']='admin'){
             $categorias= new categorias;
@@ -25,7 +29,9 @@ class categoriasController{
         }
     }
     //esta es más rapida en borrar con la pura id jasjas
-    public function eliminarConID($usuario,$id){
+    public function eliminarConID($args){
+        $usuario=$args['usuario'];
+        $id=$args['id'];
         require_once 'models/categorias.php';
         if($usuario['rol']='admin'){
             $categorias=new categorias;

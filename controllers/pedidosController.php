@@ -16,7 +16,9 @@ class pedidosController{
         $pedido->agregar_DB($array);
         //inserte la vista de exito o error//
     }
-    public function eliminar_pedido($id,$user_id){
+    public function eliminar_pedido($args){
+        $id=$args['id'];
+        $user_id=$args['user_id'];
         require_once 'models/pedidos.php';
         $pedido= new pedidos;
        $result=$pedido->eliminar_pedido($id,$user_id);
