@@ -7,6 +7,9 @@ class FrontController{
             $action= $_GET['action'];
             $args=$_POST['args'];
             $controller->$action($args);
+        }elseif(empty($_GET['controller'])){
+            $productos= new productosController;
+            $productos->sacarMasNuevo();
         }
     }
 }

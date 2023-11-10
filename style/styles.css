@@ -3,6 +3,8 @@
     display: grid;
     grid-template-rows: 5fr 45fr 45fr 5fr  ;
     grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-auto-columns: 1fr;
+    grid-auto-rows: 1fr;
 }
 .barra__logo{
     margin:2px;
@@ -50,7 +52,22 @@ header,span{
     grid-column: 1 / 6;
 }
 /*CONTENIDO*/
-
+.lista{
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-auto-rows: 1fr;
+}
+.lista__producto{
+    
+}
+.lista__producto-img{
+    width: 150px;
+    padding:2px;
+}
+.lista__producto{
+    display: inline-block;
+    
+}
 
 /*PIE*/
 .pie{

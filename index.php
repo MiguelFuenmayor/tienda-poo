@@ -7,7 +7,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
   <link rel="stylesheet" src="style/normalize.css"/>
   <link rel="stylesheet" src="style/styles.css"/>
-  <?php require_once 'autoload.php'; ?>
+  <?php
+  require_once 'autoload.php';
+  
+  $carrito= new carritos();
+  session_start();
+  ?>
   <title>Mi Tienda</title>
 </head>
 
@@ -20,9 +25,10 @@
       <div class="barra__busqueda">
         <input type="text" placeholder="Ingrese su busqueda..." />
       </div>
+      <span class="material-symbols-outlined">shopping_cart_checkout</span>
+
       <div class="barra__carrito">
-        <span class="material-symbols-outlined">shopping_cart_checkout
-        </span>
+         <?php require_once 'views/carrito.php'; ?>
       </div>
 
       <span class="material-symbols-outlined">Menu</span>
@@ -45,7 +51,6 @@
       LATERAL
     </aside> -->
     <div class="contenido grid-item"> <!--CONTENIDO: aquí se cargaran todas las vistas, los distintos productos, etc -->
-      CONTENIDO
       <!--AGREGAR EL CONTROLADOR FRONTAL-->
       <?Php FrontController::main(); ?>
     </div>

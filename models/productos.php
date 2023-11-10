@@ -15,7 +15,7 @@ class productos extends general{
 		if($this->db->errno==0){
 			$query="SELECT * FROM productos ORDER BY id DESC";
 			$result=$this->db->query($query);
-			return $result->fetch_all($result);
+			return $result->fetch_all(MYSQLI_ASSOC);
 			
 		}
 	}

@@ -1,6 +1,6 @@
 <?php
-require_once 'general.php';
-class carritos extends general{
+
+class carritos{
     /**
      * Summary of productos
      * @var array
@@ -12,6 +12,10 @@ class carritos extends general{
      * @param mixed $cantidad
      * @return void
      */
+    
+    public function mostrar_orden(){
+        require_once 'views/mostrar_orden.php';
+    }
     public function agregar_producto($args){
         $id=$args['id'];
         $cantidad=$args['cantidad'];
@@ -45,6 +49,12 @@ class carritos extends general{
     }
     public function eliminar_carrito(){
         unset($this->productos);
+    }
+    public function setProductos($arg){
+        $this->productos=$arg;
+    }
+    public function getProductos(){
+        return $this->productos;
     }
 }
 
